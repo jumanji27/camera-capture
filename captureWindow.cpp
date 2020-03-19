@@ -68,6 +68,7 @@ bool CaptureWindow::init( commandLine& cmdLine )
 	 */
 	camera = gstCamera::Create(cmdLine.GetInt("width", gstCamera::DefaultWidth),
 						  cmdLine.GetInt("height", gstCamera::DefaultHeight),
+						  cmdLine.GetInt("fps", gstCamera::DefaultFps),
 						  cmdLine.GetString("camera"));
 
 	if( !camera )
@@ -75,19 +76,20 @@ bool CaptureWindow::init( commandLine& cmdLine )
 		printf("\ncamera-capture:  failed to initialize camera device\n");
 		return false;
 	}
-	
+
 	printf("\ncamera-capture:  successfully initialized camera device\n");
 	printf("    width:  %u\n", camera->GetWidth());
 	printf("   height:  %u\n", camera->GetHeight());
+	printf("      fps:  %u\n", camera->GetFps());
 	printf("    depth:  %u (bpp)\n\n", camera->GetPixelDepth());
-	
+
 
 	/*
 	 * create openGL window
 	 */
 	display = glDisplay::Create();
 
-	if( !display ) 
+	if( !display )
 	{
 		printf("camera-capture:  failed to create openGL display\n");
 		return false;
@@ -95,7 +97,7 @@ bool CaptureWindow::init( commandLine& cmdLine )
 
 	return true;
 }
-	
+
 
 // Render
 void CaptureWindow::Render()
